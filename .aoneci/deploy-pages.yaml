@@ -1,0 +1,22 @@
+name: deploy-pages
+
+triggers:
+  push:
+
+jobs:
+  deploy:
+    image: alios-8u
+    steps:
+      - uses: checkout                            # 下载代码
+      - uses: setup-env                           # 配置构建环境
+        inputs:
+          node-version: 20
+          tnpm-version: 10
+      - id: build-website                         # 构建website
+        run: |
+          npm install --registry=https://registry.anpm.alibaba-inc.com
+          npm run build                           # 执行构建，产物在 build/ 目录下
+      - uses: deploy-pages                        # 部署到Aone Pages
+        inputs:
+          deploy-dir: build/                      # 构建后的静态资源目录
+          production-branch: master               # 触发部署[正式版本]的分支，否则为[预览版本]
