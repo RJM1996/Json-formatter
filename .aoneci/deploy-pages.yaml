@@ -18,5 +18,5 @@ jobs:
           npm run build                           # 执行构建，产物在 build/ 目录下
       - uses: deploy-pages                        # 部署到Aone Pages
         inputs:
-          deploy-dir: build/                      # 构建后的静态资源目录
+          deploy-dir: out/                      # 构建后的静态资源目录
           production-branch: master               # 触发部署[正式版本]的分支，否则为[预览版本]
