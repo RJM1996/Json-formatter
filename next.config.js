@@ -1,5 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  basePath: '/Json-formatter',
+  // 如果要部署到GitHub Pages，还需要添加
+  assetPrefix: '/Json-formatter',
   output: "export",
   reactStrictMode: true,
   swcMinify: true,
