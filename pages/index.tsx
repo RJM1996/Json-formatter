@@ -1,13 +1,13 @@
-'use client';
+"use client";
 
-import dynamic from 'next/dynamic';
+import dynamic from "next/dynamic";
 import { Layout, Button, message, Space, Switch } from "antd";
 import { useState, useEffect, useCallback } from "react";
 import { formatJson } from "../utils";
 
 // 动态导入 Monaco Editor 以避免 SSR 问题
 const Editor = dynamic(() => import("@monaco-editor/react"), {
-  ssr: false
+  ssr: false,
 });
 
 const { Content } = Layout;
@@ -25,6 +25,7 @@ export default function Home() {
   const [outputEditorInstance, setOutputEditorInstance] = useState<any>(null);
   const [foldingRanges, setFoldingRanges] = useState<FoldingRange[]>([]);
   const [isDarkMode, setIsDarkMode] = useState(true);
+  const [isThemeTransitioning, setIsThemeTransitioning] = useState(false);
 
   const formatWithIndent = useCallback((obj: any, comments: { [key: string]: string } = {}) => {
     const addComments = (str: string) => {
@@ -174,9 +175,16 @@ export default function Home() {
   };
 
   const handleThemeChange = (checked: boolean) => {
+    setIsThemeTransitioning(true);
     setIsDarkMode(checked);
+
     // 保存主题偏好到本地存储
     localStorage.setItem("theme", checked ? "dark" : "light");
+
+    // 等待过渡完成后移除过渡状态
+    setTimeout(() => {
+      setIsThemeTransitioning(false);
+    }, 300); // 与 CSS 过渡时间匹配
   };
 
   // 初始化主题
@@ -186,7 +194,7 @@ export default function Home() {
   }, []);
 
   return (
-    <Layout className={`layout ${isDarkMode ? "dark" : "light"}`}>
+    <Layout className={`layout ${isDarkMode ? "dark" : "light"} ${isThemeTransitioning ? "theme-transitioning" : ""}`}>
       <Content className="content">
         <div className="editors-wrapper">
           <div className="editor-panel input-panel">
@@ -213,9 +221,15 @@ export default function Home() {
                 wordWrap: "on",
                 automaticLayout: true,
                 folding: true,
+                smoothScrolling: true,
+                renderWhitespace: "none",
+                contextmenu: false,
+                // 添加主题相关配置
+                theme: isDarkMode ? "vs-dark" : "vs-light",
                 renderValidationDecorations: "off",
                 renderLineHighlight: "none",
               }}
+              loading={<div className="editor-loading">Loading...</div>}
             />
           </div>
           <div className="editor-panel output-panel">
@@ -254,4 +268,4 @@ export default function Home() {
       </Content>
     </Layout>
   );
-} 
+}

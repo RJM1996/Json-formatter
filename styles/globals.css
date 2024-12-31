@@ -204,4 +204,54 @@ body {
 .monaco-editor-container {
   height: 100% !important;
   width: 100% !important;
+}
+
+/* 添加全局过渡效果 */
+.layout,
+.editor-panel,
+.monaco-editor,
+.monaco-editor .margin,
+.monaco-editor-background,
+.panel-header h3,
+.ant-btn {
+  transition: all 0.3s ease !important;
+}
+
+/* 优化主题切换时的背景色过渡 */
+.layout.dark,
+.layout.light {
+  transition: background-color 0.3s ease;
+}
+
+.input-panel,
+.output-panel {
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+/* 优化按钮过渡效果 */
+.ant-btn {
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease !important;
+}
+
+/* 优化编辑器主题切换 */
+.monaco-editor,
+.monaco-editor .margin,
+.monaco-editor-background {
+  transition: background-color 0.3s ease !important;
+}
+
+/* 优化开关按钮过渡 */
+.theme-switch .ant-switch {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 确保编辑器容器在主题切换时不会闪烁 */
+.monaco-editor-container {
+  opacity: 1 !important;
+  transition: opacity 0.3s ease !important;
+}
+
+/* 添加预加载状态 */
+.theme-transitioning {
+  pointer-events: none;
 } 
