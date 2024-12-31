@@ -1,0 +1,207 @@
+@import 'antd/dist/reset.css';
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+  height: 100vh;
+}
+
+.layout {
+  min-height: 100vh;
+  transition: all 0.3s;
+}
+
+.content {
+  padding: 0;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.editors-wrapper {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+}
+
+.editor-panel {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 12px;
+  transition: all 0.3s;
+  box-sizing: border-box;
+}
+
+.input-panel {
+  width: 40%;
+  border-right: 1px solid;
+  flex-shrink: 0;
+}
+
+.output-panel {
+  width: 60%;
+  flex-shrink: 0;
+}
+
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  padding: 0 8px;
+  height: 36px;
+}
+
+.panel-header-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.panel-header h3 {
+  margin: 0;
+}
+
+/* 主题切换开关样式 */
+.theme-switch {
+  margin-left: auto;
+}
+
+.theme-switch .ant-switch {
+  background-color: rgba(0, 0, 0, 0.25);
+}
+
+.theme-switch .ant-switch-checked {
+  background-color: #1890ff;
+}
+
+/* 暗色主题 */
+.layout.dark {
+  background: #1e1e1e;
+}
+
+.dark .input-panel {
+  background: #252526;
+  border-right-color: #333;
+}
+
+.dark .output-panel {
+  background: #1e1e1e;
+}
+
+.dark .panel-header h3 {
+  color: #fff;
+}
+
+.dark .ant-btn {
+  background: #2d2d2d;
+  border-color: #404040;
+  color: #d4d4d4;
+}
+
+.dark .ant-btn:hover {
+  background: #3d3d3d !important;
+  border-color: #505050 !important;
+  color: #ffffff !important;
+}
+
+.dark .ant-btn:active {
+  background: #505050 !important;
+  border-color: #606060 !important;
+}
+
+.dark .ant-btn[disabled],
+.dark .ant-btn[disabled]:hover,
+.dark .ant-btn[disabled]:active {
+  background: #2d2d2d !important;
+  border-color: #404040 !important;
+  color: rgba(255, 255, 255, 0.25) !important;
+}
+
+/* 亮色主题 */
+.layout.light {
+  background: #ffffff;
+}
+
+.light .input-panel {
+  background: #f5f5f5;
+  border-right-color: #e8e8e8;
+}
+
+.light .output-panel {
+  background: #ffffff;
+}
+
+.light .panel-header h3 {
+  color: #000;
+}
+
+.light .ant-btn {
+  background: #fff;
+  border-color: #d9d9d9;
+  color: rgba(0, 0, 0, 0.85);
+}
+
+.light .ant-btn:hover {
+  background: #fff !important;
+  border-color: #40a9ff !important;
+  color: #40a9ff !important;
+}
+
+.light .ant-btn:active {
+  background: #fff !important;
+  border-color: #096dd9 !important;
+  color: #096dd9 !important;
+}
+
+.light .ant-btn[disabled],
+.light .ant-btn[disabled]:hover,
+.light .ant-btn[disabled]:active {
+  background: #f5f5f5 !important;
+  border-color: #d9d9d9 !important;
+  color: rgba(0, 0, 0, 0.25) !important;
+}
+
+/* 编辑器背景色 */
+.dark .input-panel .monaco-editor,
+.dark .input-panel .monaco-editor .margin,
+.dark .input-panel .monaco-editor-background {
+  background-color: #252526 !important;
+}
+
+.dark .output-panel .monaco-editor,
+.dark .output-panel .monaco-editor .margin,
+.dark .output-panel .monaco-editor-background {
+  background-color: #1e1e1e !important;
+}
+
+.light .input-panel .monaco-editor,
+.light .input-panel .monaco-editor .margin,
+.light .input-panel .monaco-editor-background {
+  background-color: #f5f5f5 !important;
+}
+
+.light .output-panel .monaco-editor,
+.light .output-panel .monaco-editor .margin,
+.light .output-panel .monaco-editor-background {
+  background-color: #ffffff !important;
+}
+
+/* 编辑器容器样式 */
+.monaco-editor {
+  height: calc(100% - 48px) !important;
+  width: 100% !important;
+}
+
+/* 确保编辑器容器填满可用空间 */
+.monaco-editor-container {
+  height: 100% !important;
+  width: 100% !important;
+} 
