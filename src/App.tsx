@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { Layout, Button, message, Space } from "antd";
+import { Layout, Button, message, Space, Switch } from "antd";
 import Editor from "@monaco-editor/react";
 import { formatJson } from "./utils";
 import "./App.css";
@@ -17,6 +17,7 @@ const App: React.FC = () => {
   const [output, setOutput] = useState("");
   const [editorInstance, setEditorInstance] = useState<any>(null);
   const [foldingRanges, setFoldingRanges] = useState<FoldingRange[]>([]);
+  const [isDarkMode, setIsDarkMode] = useState(true);
 
   const formatWithIndent = useCallback((obj: any, comments: { [key: string]: string } = {}) => {
     const addComments = (str: string) => {
@@ -67,23 +68,23 @@ const App: React.FC = () => {
           // 使用 Monaco 的内置折叠范围提供器
           const ranges = model.getLinesContent().reduce((acc: FoldingRange[], line: string, index: number) => {
             // 检测开始的大括号
-            if (line.includes('{')) {
+            if (line.includes("{")) {
               const startLine = index + 1;
               // 寻找匹配的结束大括号
               let depth = 1;
               let endLine = startLine;
-              
+
               for (let i = index + 1; i < model.getLineCount(); i++) {
                 const currentLine = model.getLineContent(i + 1);
-                if (currentLine.includes('{')) depth++;
-                if (currentLine.includes('}')) depth--;
-                
+                if (currentLine.includes("{")) depth++;
+                if (currentLine.includes("}")) depth--;
+
                 if (depth === 0) {
                   endLine = i + 1;
                   acc.push({
                     start: startLine,
                     end: endLine,
-                    expanded: true
+                    expanded: true,
                   });
                   break;
                 }
@@ -91,7 +92,7 @@ const App: React.FC = () => {
             }
             return acc;
           }, []);
-          
+
           setFoldingRanges(ranges);
         }
       }
@@ -188,24 +189,38 @@ const App: React.FC = () => {
     setInput(example);
   };
 
+  const handleThemeChange = (checked: boolean) => {
+    setIsDarkMode(checked);
+    // 保存主题偏好到本地存储
+    localStorage.setItem("theme", checked ? "dark" : "light");
+  };
+
+  // 初始化主题
+  useEffect(() => {
+    const savedTheme = localStorage.getItem("theme");
+    setIsDarkMode(savedTheme ? savedTheme === "dark" : true);
+  }, []);
+
   return (
-    <Layout className="layout">
+    <Layout className={`layout ${isDarkMode ? "dark" : "light"}`}>
       <Content className="content">
         <div className="editors-wrapper">
           <div className="editor-panel input-panel">
             <div className="panel-header">
-              <h3>输入（支持 JSON、JSONC 和 JS 对象）</h3>
-              <Space>
-                <Button onClick={addJsObjectExample}>JS对象示例</Button>
-                <Button onClick={addJsoncExample}>JSONC示例</Button>
-              </Space>
+              <div className="panel-header-left">
+                <h3>输入（支持 JSON、JSONC 和 JS 对象）</h3>
+                <Space>
+                  <Button onClick={addJsObjectExample}>JS对象示例</Button>
+                  <Button onClick={addJsoncExample}>JSONC示例</Button>
+                </Space>
+              </div>
             </div>
             <Editor
               height="calc(100vh - 64px)"
               defaultLanguage="json"
               value={input}
               onChange={(value) => setInput(value || "")}
-              theme="vs-dark"
+              theme={isDarkMode ? "vs-dark" : "light"}
               options={{
                 minimap: { enabled: false },
                 fontSize: 14,
@@ -222,17 +237,19 @@ const App: React.FC = () => {
               <Space>
                 <Button onClick={expandAll}>展开全部</Button>
                 <Button onClick={collapseAll}>折叠全部</Button>
-                
                 <Button onClick={copyToClipboard} disabled={!output}>
                   复制
                 </Button>
+                <div className="theme-switch">
+                  <Switch checked={isDarkMode} onChange={handleThemeChange} checkedChildren="🌙" unCheckedChildren="☀️" />
+                </div>
               </Space>
             </div>
             <Editor
               height="calc(100vh - 64px)"
               defaultLanguage="json"
               value={output}
-              theme="vs-dark"
+              theme={isDarkMode ? "vs-dark" : "light"}
               onMount={handleEditorDidMount}
               options={{
                 readOnly: true,
