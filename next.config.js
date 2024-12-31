@@ -4,6 +4,7 @@ const nextConfig = {
   // 如果要部署到GitHub Pages，还需要添加
   assetPrefix: '/Json-formatter',
   output: "export",
+  distDir: "docs",
   reactStrictMode: true,
   swcMinify: true,
   transpilePackages: ["@monaco-editor/react"],

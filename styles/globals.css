@@ -63,6 +63,7 @@ body {
   display: flex;
   align-items: center;
   gap: 16px;
+  justify-content: space-between;
 }
 
 .panel-header h3 {
