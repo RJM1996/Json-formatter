@@ -67,7 +67,7 @@ const App = () => {
               </div>
               <Editor
                 height="calc(100vh - 200px)"
-                defaultLanguage="json"
+                defaultLanguage="jsonc"
                 value={input}
                 onChange={setInput}
                 theme="vs-dark"
