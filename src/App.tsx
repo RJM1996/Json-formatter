@@ -97,7 +97,6 @@ const App: React.FC = () => {
       }
     } catch (error) {
       console.error("Parsing error:", error);
-      message.error("解析失败：请检查输入格式是否正确");
       setOutput("");
     }
   }, [input, editorInstance, formatWithIndent]);
@@ -153,7 +152,7 @@ const App: React.FC = () => {
     });
   };
 
-  const addExampleInput = () => {
+  const addJsObjectExample = () => {
     const example = `{
     // 这是一个注释
     name: 'test',
@@ -167,19 +166,42 @@ const App: React.FC = () => {
     setInput(example);
   };
 
+  const addJsoncExample = () => {
+    const example = `{
+    // 这是一个 JSONC 示例
+    "name": "example",
+    "description": "这是一个带注释的 JSON", // 行尾注释
+    /* 多行注释
+       支持嵌套对象 */
+    "config": {
+      "enabled": true,
+      "items": [
+        "item1",
+        "item2"  // 数组元素注释
+      ],
+      "options": {
+        "debug": false,  // 调试模式
+        "timeout": 1000  // 超时时间
+      }
+    }  // 支持尾随逗号
+  }`;
+    setInput(example);
+  };
+
   return (
     <Layout className="layout">
-      <Header className="header">
-        <h1>JSON 格式化工具</h1>
-      </Header>
       <Content className="content">
         <div className="editors-wrapper">
-          <div className="editor-panel">
+          <div className="editor-panel input-panel">
             <div className="panel-header">
               <h3>输入（支持 JSON、JSONC 和 JS 对象）</h3>
+              <Space>
+                <Button onClick={addJsObjectExample}>JS对象示例</Button>
+                <Button onClick={addJsoncExample}>JSONC示例</Button>
+              </Space>
             </div>
             <Editor
-              height="calc(100vh - 200px)"
+              height="calc(100vh - 64px)"
               defaultLanguage="json"
               value={input}
               onChange={(value) => setInput(value || "")}
@@ -194,27 +216,26 @@ const App: React.FC = () => {
               }}
             />
           </div>
-          <div className="editor-panel">
+          <div className="editor-panel output-panel">
             <div className="panel-header">
               <h3>格式化结果</h3>
               <Space>
                 <Button onClick={expandAll}>展开全部</Button>
                 <Button onClick={collapseAll}>折叠全部</Button>
-                <Button onClick={addComment}>添加注释</Button>
+                
                 <Button onClick={copyToClipboard} disabled={!output}>
                   复制
                 </Button>
-                <Button onClick={addExampleInput}>插入示例</Button>
               </Space>
             </div>
             <Editor
-              height="calc(100vh - 200px)"
+              height="calc(100vh - 64px)"
               defaultLanguage="json"
               value={output}
               theme="vs-dark"
               onMount={handleEditorDidMount}
               options={{
-                readOnly: false,
+                readOnly: true,
                 minimap: { enabled: false },
                 fontSize: 14,
                 lineNumbers: "on",
