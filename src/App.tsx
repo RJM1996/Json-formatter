@@ -201,6 +201,11 @@ const App: React.FC = () => {
     setIsDarkMode(savedTheme ? savedTheme === "dark" : true);
   }, []);
 
+  const handleInputEditorDidMount = (editor: any) => {
+    // 自动聚焦到输入框
+    editor.focus();
+  };
+
   return (
     <Layout className={`layout ${isDarkMode ? "dark" : "light"}`}>
       <Content className="content">
@@ -221,6 +226,7 @@ const App: React.FC = () => {
               value={input}
               onChange={(value) => setInput(value || "")}
               theme={isDarkMode ? "vs-dark" : "light"}
+              onMount={handleInputEditorDidMount}
               options={{
                 minimap: { enabled: false },
                 fontSize: 14,
@@ -228,6 +234,8 @@ const App: React.FC = () => {
                 wordWrap: "on",
                 automaticLayout: true,
                 folding: true,
+                renderValidationDecorations: "off",
+                renderLineHighlight: "none",
               }}
             />
           </div>
