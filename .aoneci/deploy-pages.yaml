@@ -19,4 +19,5 @@ jobs:
       - uses: deploy-pages                        # 部署到Aone Pages
         inputs:
           deploy-dir: out/                      # 构建后的静态资源目录
-          production-branch: master               # 触发部署[正式版本]的分支，否则为[预览版本]
+          preview: master                          # 触发部署[预览版本]的分支
+          # production-branch: master               # 触发部署[正式版本]的分支，否则为[预览版本]
