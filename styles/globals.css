@@ -213,7 +213,6 @@ body {
 .monaco-editor,
 .monaco-editor .margin,
 .monaco-editor-background,
-.panel-header h3,
 .ant-btn {
   transition: all 0.3s ease !important;
 }
