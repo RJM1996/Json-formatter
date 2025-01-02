@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "deploy": "npm run build && touch ./docs/.nojekyll"
+    "deploy": "npx next build && touch ./docs/.nojekyll"
   },
   "dependencies": {
     "@monaco-editor/react": "^4.6.0",
