@@ -265,6 +265,9 @@ export default function Home() {
             />
           </div>
         </div>
+        <div className="powered-by">
+          Powered by <a href="https://docs.cursor.com" target="_blank" rel="noopener noreferrer">Cursor</a>
+        </div>
       </Content>
     </Layout>
   );
